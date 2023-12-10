@@ -26,7 +26,7 @@ class LoginForm extends HTMLElement {
             const username = formData.get('username');
             const password = formData.get('password');
 
-            fetch('/api/login', {
+            fetch('/login/password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
