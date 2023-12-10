@@ -37,10 +37,6 @@ pool.connect(err => {
 });
 
 
-
-
-app.use('/', authRouter);
-
 app.get('/api/data', (req, res) => {
     res.json({ message: "Hello from the Node.js API!" });
 });
@@ -55,6 +51,35 @@ app.get('/api/now', (req, res) => {
         }
     });
 });
+
+app.use(express.json()); // Middleware to parse JSON bodies
+
+app.post('/api/register', (req, res) => {
+    const { username, email, password } = req.body;
+
+    // Basic validation
+    if (!username || !email || !password) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Additional validation can be performed here
+    // For example, checking if the email is valid, password length, etc.
+
+    // Assuming you have a function to handle the registration logic
+    // registerUser(username, email, password).then(user => {
+    //     res.status(201).json({ message: 'User registered successfully', user });
+    // }).catch(error => {
+    //     // Handle specific errors (e.g., user already exists, database errors)
+    //     console.error(error);
+    //     res.status(500).json({ error: 'Internal server error' });
+    // });
+
+    // Placeholder response for demonstration
+    console.log(`Registering user: Username: ${username}, Email: ${email}`);
+    res.status(201).json({ message: 'User registered successfully' });
+});
+
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
