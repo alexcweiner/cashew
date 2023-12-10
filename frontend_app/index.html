@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="webcomponents/Router.js"></script>
+    <script src="webcomponents/LoginForm.js"></script>
+    <script src="webcomponents/RegisterForm.js"></script>
+    <script src="webcomponents/SuccessMessage.js"></script>
+    <script src="webcomponents/UserProfile.js"></script>
+    <script src="webcomponents/EditProfile.js"></script>
+</head>
+<body>
+    <!-- <h1>Hello</h1> -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Define the routerComponent variable outside the setTimeout function
+        const routerComponent = new RouterComponent([
+            { href: '/', text: 'Home', component: '<p>Please login or register</p>' },
+            { href: '/login', text: 'Login', component: new LoginForm() },
+            { href: '/register', text: 'Register', component: new RegisterForm() },
+            { href: '/user', text: 'Profile', component: new UserProfile() },
+            { href: '/edit', text: 'Edit', component: new EditProfile() },
+        ]);
+
+        document.querySelector('body').appendChild(routerComponent);
+
+        // Use the routerComponent variable inside setTimeout
+        setTimeout(() => {
+            const homeLink = routerComponent.shadowRoot.querySelector('a[href="/"]');
+            if (homeLink) {
+                homeLink.click();
+            }
+        }, 0);
+    });
+</script>
+</body>
+</html>
