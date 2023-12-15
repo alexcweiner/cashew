@@ -3,9 +3,7 @@ class SuccessMessage extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-        <style>
-            /* Add styles for your success message */
-        </style>
+   
         <div>
             <p>Registration Successful!</p>
             <button id="continueButton">Continue</button>

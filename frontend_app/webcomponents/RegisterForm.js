@@ -69,3 +69,56 @@ class RegisterForm extends HTMLElement {
 }
 
 customElements.define('register-form', RegisterForm);
+
+
+/////////////////////////////////////////////
+
+
+// Assuming this code is within a method of a custom element class
+// createRegisterForm() {
+//     // Clear existing content
+//     this.shadowRoot.innerHTML = '';
+
+//     // Create link to CSS
+//     const link = document.createElement('link');
+//     link.setAttribute('rel', 'stylesheet');
+//     link.setAttribute('href', 'styles.css');
+//     this.shadowRoot.appendChild(link);
+
+//     // Create and append the form elements
+//     const form = document.createElement('form');
+//     form.setAttribute('id', 'registerForm');
+
+//     // Add fields to the form
+//     form.appendChild(this.createFormField('username', 'Username', 'text'));
+//     form.appendChild(this.createFormField('email', 'Email', 'email'));
+//     form.appendChild(this.createFormField('password', 'Password', 'password'));
+//     form.appendChild(this.createFormField('confirmPassword', 'Confirm Password', 'password'));
+
+//     // Create and append the submit button
+//     const submitButton = document.createElement('button');
+//     submitButton.setAttribute('type', 'submit');
+//     submitButton.textContent = 'Register';
+//     form.appendChild(submitButton);
+
+//     // Append the form to the shadow root
+//     this.shadowRoot.appendChild(form);
+// }
+
+// createFormField(id, label, type) {
+//     const div = document.createElement('div');
+
+//     const labelElement = document.createElement('label');
+//     labelElement.setAttribute('for', id);
+//     labelElement.textContent = label + ':';
+//     div.appendChild(labelElement);
+
+//     const input = document.createElement('input');
+//     input.setAttribute('type', type);
+//     input.setAttribute('id', id);
+//     input.setAttribute('name', id);
+//     input.required = true;
+//     div.appendChild(input);
+
+//     return div;
+// }
