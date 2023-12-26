@@ -20,7 +20,7 @@ app.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try { //POSTing to the db server
-        const postResponse = await fetch('http://db_app:3000/newuser', {
+        const postResponse = await fetch('http://nginx/db/newuser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

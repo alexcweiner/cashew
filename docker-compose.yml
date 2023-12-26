@@ -1,3 +1,4 @@
+-- Active: 1702511412013@@127.0.0.1@5432@your_db
 version: '3'
 
 services:
@@ -7,42 +8,15 @@ services:
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./frontend_app:/usr/share/nginx/html
+      - ./frontend_app:/usr/share/nginx/html      
     depends_on:
       - registration_app
-      - flask_app
       - postgres
       - db_app
       # - rails_app
 
-  registration_app:
-    build: ./registration_app
-    environment:
-      - DB_HOST=postgres
-    ports:
-      - "5005:3000"
-  #   depends_on:
-  #     - postgres
 
-  db_app:
-    build: ./db_app
-    environment:
-      - DB_HOST=postgres
-    ports:
-      - "5003:3000"
-    depends_on:
-      - postgres
-    entrypoint: ["dockerize", "-wait", "tcp://postgres:5432", "-timeout", "60s"]
-    command: ["node", "app.js"]
 
-  auth_app:
-    build: ./auth_app
-    environment:
-      - DB_HOST=postgres
-    ports:
-      - "5004:3000"
-  #   depends_on:
-  #     - postgres
 
   postgres:
     image: postgres:latest
@@ -55,12 +29,52 @@ services:
     ports:
       - "5432:5432"
 
-  flask_app:
-    build: ./flask_app
+
+  db_app:
+    build: ./db_app
+    environment:
+      - DB_HOST=postgres
     ports:
-      - "5001:5000"
-    # depends_on:
-    #   - postgres
+      - "5003:3000"
+    depends_on:
+      - postgres
+    entrypoint: ["dockerize", "-wait", "tcp://postgres:5432", "-timeout", "60s"]
+    command: ["node", "app.js"]
+
+
+
+
+  registration_app:
+    build: ./registration_app
+    environment:
+      - DB_HOST=postgres
+    ports:
+      - "5005:3000"
+    depends_on:
+      - db_app
+
+
+networks:
+  default:
+
+  
+
+
+  # auth_app:
+  #   build: ./auth_app
+  #   environment:
+  #     - DB_HOST=postgres
+  #   ports:
+  #     - "5004:3000"
+  #   depends_on:
+  #     - db_app
+
+  # flask_app:
+  #   build: ./flask_app
+  #   ports:
+  #     - "5001:5000"
+  #   # depends_on:
+  #   #   - postgres
 
   # rails_app:
   #   build: ./rails_app
@@ -70,5 +84,4 @@ services:
 # volumes:
 #   postgres_data:
 
-networks:
-  default:
+
