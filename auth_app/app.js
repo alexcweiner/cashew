@@ -45,6 +45,21 @@ app.post('/token', async (req, res) => {
     }
 });
 
+app.get('/validate', (req, res) => {
+    const token = req.headers['authorization']?.split(' ')[1];
+
+    if (!token) {
+        return res.sendStatus(401); // Unauthorized if no token is provided
+    }
+
+    jwt.verify(token, 'YOUR_SECRET_KEY', (err) => {
+        if (err) {
+            return res.sendStatus(403); // Forbidden if token is invalid
+        }
+        res.sendStatus(200); // OK if token is valid
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
