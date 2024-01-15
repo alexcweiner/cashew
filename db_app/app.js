@@ -3,8 +3,11 @@ const app = express();
 const port = 3000;
 const { Pool } = require('pg');
 const dbConfig = require('./dbConfig');
-
 const pool = new Pool(dbConfig);
+
+
+app.use(express.json());
+
 
 // pool.connect(err => {
 //     if (err) {
@@ -45,8 +48,6 @@ pool.connect((err, client, release) => {
     }
 });
 
-app.use(express.json()); // Middleware to parse JSON bodies
-
 app.post('/newuser', async (req, res) => {
     const { username, email, password } = req.body;
 
@@ -73,6 +74,23 @@ app.post('/newuser', async (req, res) => {
 });
 
 
+app.get('/getUserPassword/:username', async (req, res) => {
+    const { username } = req.params;
+
+    try {
+        const queryResult = await pool.query('SELECT password FROM users WHERE username = $1', [username]);
+
+        if (queryResult.rows.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const user = queryResult.rows[0];
+        res.json({ hashedPassword: user.password });
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });

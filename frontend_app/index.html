@@ -7,15 +7,21 @@
     <link rel="stylesheet" href="styles.css">
     <script src="webcomponents/Router.js"></script>
     <script src="webcomponents/LoginForm.js"></script>
-    <script src="webcomponents/RegisterForm.js"></script>
-    <script src="webcomponents/SuccessMessage.js"></script>
+    <!-- <script type="module" src="webcomponents/RegisterForm.js"></script> -->
+    <!-- <script  src="webcomponents/SuccessMessage.js"></script> -->
     <script src="webcomponents/UserProfile.js"></script>
     <script src="webcomponents/EditProfile.js"></script>
-    <script src="webcomponents/TimeDisplay.js"></script>
+    <!-- <script src="webcomponents/TimeDisplay.js"></script> -->
+    
 </head>
 <body>
     <!-- <h1>Hello</h1> -->
-<script>
+<script type="module" >
+
+    import RegisterForm  from './webcomponents/RegisterForm.js';
+
+
+
     document.addEventListener('DOMContentLoaded', () => {
         // Define the routerComponent variable outside the setTimeout function
         const routerComponent = new RouterComponent([
@@ -38,7 +44,8 @@
 
     });
 </script>
-<time-display></time-display>
+<!-- <time-display></time-display> -->
 </body>
-
 </html>
+
+

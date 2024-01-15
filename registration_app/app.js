@@ -34,7 +34,7 @@ app.post('/register', async (req, res) => {
 
         // Check the response status code
         if (postResponse.ok) {
-            res.json({ message: 'Data forwarded successfully' });
+            res.json({ message: postResponse.message });
         } else {
             const errorData = await postResponse.json(); // Optional: capture more error details
             res.status(postResponse.status).json({ message: 'Failed to forward data', error: errorData });

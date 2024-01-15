@@ -1,4 +1,6 @@
-class RegisterForm extends HTMLElement {
+
+
+export default class RegisterForm extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -42,7 +44,7 @@ class RegisterForm extends HTMLElement {
                 return;
             }
 
-            fetch('/api/register', {
+            fetch('/registration/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,8 +58,8 @@ class RegisterForm extends HTMLElement {
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Registration successful:', data);
-                    const mainElement = document.querySelector('main');
+                    console.log('Registration successful:', JSON.stringify(data));
+                    const mainElement = this.shadowRoot.getElementById('content');
                     mainElement.innerHTML = '';
                     mainElement.appendChild(new SuccessMessage());
                 })

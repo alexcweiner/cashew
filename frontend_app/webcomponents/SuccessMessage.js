@@ -1,4 +1,4 @@
-class SuccessMessage extends HTMLElement {
+export default class SuccessMessage extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });

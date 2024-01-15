@@ -16,43 +16,47 @@ class LoginForm extends HTMLElement {
                 </div>
                 <button type="submit">Login</button>
             </form>`;
+        this.handleSubmit = this.handleSubmit.bind(this); // Bind the event handler to the class instance
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('#loginForm').addEventListener('submit', e => {
-            e.preventDefault();
+        this.shadowRoot.querySelector('#loginForm').addEventListener('submit', this.handleSubmit);
+    }
 
-            const formData = new FormData(e.target);
-            const username = formData.get('username');
-            const password = formData.get('password');
+    disconnectedCallback() {
+        this.shadowRoot.querySelector('#loginForm').removeEventListener('submit', this.handleSubmit);
+    }
 
-            fetch('/login/password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
+    handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const username = formData.get('username');
+        const password = formData.get('password');
+
+        fetch('/auth/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Login failed');
+                }
+                return response.json();
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Login failed');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Handle successful login here (e.g., redirect to dashboard)
-                    console.log('Login successful:', data);
+            .then(data => {
+                console.log('Login successful:', data);
 
-                    // Redirect to the dashboard page using plain JavaScript
-                    window.location.href = '/dashboard';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Handle error (e.g., show error message)
-                });
-        });
+                localStorage.setItem('token', data.token); // Store the token in local storage
 
-
+                window.location.href = '/dashboard';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 }
 
